@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<style type="text/css">
+			html, body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+
+			#canvas {
+				background: #fff;
+				height: 100%;
+				width: 100%;
+			}
+		</style>
+		<script type="text/javascript" src="src/textboard.js"></script>
+	</head>
+
+	<body>
+		<div id="canvas"></div>
+
+		<script type="text/javascript">
+			var mouseX = 0;
+			var mouseY = 0;
+
+			// Canvas setup
+			document.getElementById('canvas').style.background = '#efefef';
+			document.getElementById('canvas').addEventListener('mousemove', function (e) {
+				mouseX = e.clientX;
+				mouseY = e.clientY;
+			});
+			document.getElementById('canvas').addEventListener('dblclick', function () {
+
+				var position = {top: mouseY + 'px', 
+								left: mouseX + 'px'};
+
+				var newTextBox = new Text('Text', {height: 'auto', width: 'auto'}, 'black', '48px', position, 'normal', 'normal');
+
+				//TODO push object into array
+
+				newTextBox.element.dispatchEvent(new MouseEvent('dblclick'));
+
+			});
+
+			// Test objects
+			var text1 = new Text('Untitled', {height: 'auto', width: 'auto'}, '#666666', '72px', {top: '50%', left: '50%'}, 'normal', 'normal');
+
+		</script>
+	</body>
+</html>
