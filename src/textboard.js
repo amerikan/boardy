@@ -35,7 +35,7 @@ Text.prototype.draw = function () {
 	textBox.style.fontSize = this.size;
 	textBox.style.fontWeight = this.weight;
 	textBox.style.color = this.color;
-	textBox.style.width = this.bounds.width;
+	//textBox.style.width = this.bounds.width;
 	textBox.style.height = this.bounds.height;
 
 	// Bold button setup
