@@ -20,6 +20,7 @@ Text.prototype.draw = function () {
 	var tools = document.createElement('div');
 	var boldButton = document.createElement('button');
 	var italicizeButton = document.createElement('button');
+	var fontSizeSelect = document.createElement('select');
 	var deleteButton = document.createElement('button');
 
 	var that = this;
@@ -28,15 +29,16 @@ Text.prototype.draw = function () {
 
 	textBox.style.border = '1px dotted transparent';
 	textBox.style.display = 'block';
-	textBox.style.position = 'absolute';
+	textBox.style.position = 'relative';
 	textBox.style.cursor = 'move';
 
 	textBox.style.fontSize = this.size;
 	textBox.style.fontWeight = this.weight;
 	textBox.style.color = this.color;
-	textBox.style.width = this.bounds.width;
+	//textBox.style.width = this.bounds.width;
 	textBox.style.height = this.bounds.height;
 
+	// Bold button setup
 	boldButton.innerHTML = "<b>B</b>";
 	boldButton.addEventListener('click', function (e) {
 		if (that.weight === "bold") {
@@ -49,6 +51,7 @@ Text.prototype.draw = function () {
 		}
 	});
 
+	// Italics button setup
 	italicizeButton.innerHTML = "<i>I</i>";
 	italicizeButton.addEventListener('click', function (e) {
 		if (that.style === "italic") {
@@ -61,6 +64,14 @@ Text.prototype.draw = function () {
 		}
 	});
 
+	// Font size select setup
+	fontSizeSelect.innerHTML = '<option value="2">2</option><option value="5">5</option><option value="7">7</option><option value="10">10</option>';
+	fontSizeSelect.addEventListener('change', function (e) {
+
+		textBox.style.fontSize = this.value + 'em';
+	});
+
+	// Delete button setup
 	deleteButton.innerHTML = "&times;";
 	deleteButton.addEventListener('click', function (e) {
 		canvas.removeChild(container);
@@ -72,6 +83,7 @@ Text.prototype.draw = function () {
 	tools.style.border = "1px solid #ccc";
 	tools.appendChild(boldButton);
 	tools.appendChild(italicizeButton);
+	tools.appendChild(fontSizeSelect);
 	tools.appendChild(deleteButton);
 
 	container.className = 'text-object';

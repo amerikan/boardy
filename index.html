@@ -4,6 +4,7 @@
 		<title></title>
 		<style type="text/css">
 			html, body {
+				font-size: 100%;
 				height: 100%;
 				margin: 0;
 				padding: 0;
@@ -14,6 +15,16 @@
 				height: 100%;
 				width: 100%;
 			}
+
+			body,
+			.text-object {
+				-webkit-touch-callout: none;
+			    -webkit-user-select: none;
+			    -khtml-user-select: none;
+			    -moz-user-select: none;
+			    -ms-user-select: none;
+			    user-select: none;
+			}
 		</style>
 		<script type="text/javascript" src="src/textboard.js"></script>
 	</head>
@@ -22,31 +33,34 @@
 		<div id="canvas"></div>
 
 		<script type="text/javascript">
+			var storage = [];
+
+			// Track mouse crosshair position
 			var mouseX = 0;
 			var mouseY = 0;
 
 			// Canvas setup
-			document.getElementById('canvas').style.background = '#efefef';
+			document.getElementById('canvas').style.background = '#efefef'; //debugging
 			document.getElementById('canvas').addEventListener('mousemove', function (e) {
 				mouseX = e.clientX;
 				mouseY = e.clientY;
 			});
+			
 			document.getElementById('canvas').addEventListener('dblclick', function () {
 
 				var position = {top: mouseY + 'px', 
 								left: mouseX + 'px'};
 
-				var newTextBox = new Text('Text', {height: 'auto', width: 'auto'}, 'black', '48px', position, 'normal', 'normal');
+				var newTextBox = new Text('Text', {height: 'auto', width: 'auto'}, 'black', '5em', position, 'normal', 'normal');
 
-				//TODO push object into array
+				//push object into array
+				storage.push(newTextBox);
 
-				newTextBox.element.dispatchEvent(new MouseEvent('dblclick'));
+				console.log(storage);
 
 			});
 
-			// Test objects
-			var text1 = new Text('Untitled', {height: 'auto', width: 'auto'}, '#666666', '72px', {top: '50%', left: '50%'}, 'normal', 'normal');
-
+			
 		</script>
 	</body>
 </html>
