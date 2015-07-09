@@ -7,4 +7,4 @@ Add text anywhere on the web page.
 Demo
 ------
 
-[Live Demo](amerikan.github.io/textboard.js) 
+[Live Demo](http://amerikan.github.io/textboard.js) 
