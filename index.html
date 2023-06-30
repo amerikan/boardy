@@ -27,10 +27,14 @@
 			    user-select: none;
 			}
 		</style>
-		<script type="text/javascript" src="src/textboard.js"></script>
+		<script type="text/javascript" src="src/index.js"></script>
 	</head>
 
 	<body>
+		<h1>Boardy Demo</h1>
+
+		<p>Double click on canvas to add object.</p>
+
 		<div id="canvas"></div>
 
 		<script type="text/javascript">
@@ -46,10 +50,10 @@
 				mouseX = e.clientX;
 				mouseY = e.clientY;
 			});
-			
+
 			document.getElementById('canvas').addEventListener('dblclick', function () {
 
-				var position = {top: mouseY + 'px', 
+				var position = {top: mouseY + 'px',
 								left: mouseX + 'px'};
 
 				var newTextBox = new Text('Text', {height: 'auto', width: 'auto'}, 'black', '5em', position, 'normal', 'normal');
@@ -61,7 +65,7 @@
 
 			});
 
-			
+
 		</script>
 	</body>
 </html>

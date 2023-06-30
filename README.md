@@ -1,10 +1,10 @@
-textboard
+Boardy
 =========
 
-Add text anywhere on the web page.
+Add styled text, images, or shapes anywhere on a canvas to create slides.
 
 
 Demo
 ------
 
-[Live Demo](http://amerikan.github.io/textboard.js) 
+[Live Demo](http://amerikan.github.io/boardy)
