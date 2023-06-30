@@ -1,146 +1,142 @@
 function Text(content, bounds, color, size, position, weight, style) {
-	this.bounds = bounds;
-	this.content = content;
-	this.color = color;
-	this.size = size;
-	this.weight = weight;
-	this.style = style;
-	this.position = position;
+  this.bounds = bounds;
+  this.content = content;
+  this.color = color;
+  this.size = size;
+  this.weight = weight;
+  this.style = style;
+  this.position = position;
 
-	this.element = null;
-	this.draw();
+  this.element = null;
+  this.draw();
 }
 
 Text.prototype.draw = function () {
+  var canvas = document.getElementById("canvas");
+  var container = document.createElement("div");
+  var textBox = document.createElement("div");
 
-	var canvas = document.getElementById('canvas');
-	var container = document.createElement('div');
-	var textBox = document.createElement('div');
-	
-	var tools = document.createElement('div');
-	var boldButton = document.createElement('button');
-	var italicizeButton = document.createElement('button');
-	var fontSizeSelect = document.createElement('select');
-	var deleteButton = document.createElement('button');
+  var tools = document.createElement("div");
+  var boldButton = document.createElement("button");
+  var italicizeButton = document.createElement("button");
+  var fontSizeSelect = document.createElement("select");
+  var deleteButton = document.createElement("button");
 
-	var that = this;
+  var that = this;
 
-	textBox.innerHTML = this.content;
+  textBox.innerHTML = this.content;
 
-	textBox.style.border = '1px dotted transparent';
-	textBox.style.display = 'block';
-	textBox.style.position = 'relative';
-	textBox.style.cursor = 'move';
+  textBox.style.border = "1px dotted transparent";
+  textBox.style.display = "block";
+  textBox.style.position = "relative";
+  textBox.style.cursor = "move";
 
-	textBox.style.fontSize = this.size;
-	textBox.style.fontWeight = this.weight;
-	textBox.style.color = this.color;
-	textBox.style.width = this.bounds.width;
-	textBox.style.height = this.bounds.height;
+  textBox.style.fontSize = this.size;
+  textBox.style.fontWeight = this.weight;
+  textBox.style.color = this.color;
+  textBox.style.width = this.bounds.width;
+  textBox.style.height = this.bounds.height;
 
-	// Bold button setup
-	boldButton.innerHTML = "<b>B</b>";
-	boldButton.addEventListener('click', function (e) {
-		if (that.weight === "bold") {
-			that.weight = 'normal';
-			textBox.style.fontWeight = 'normal';
+  // Bold button setup
+  boldButton.innerHTML = "<b>B</b>";
+  boldButton.addEventListener("click", function (e) {
+    if (that.weight === "bold") {
+      that.weight = "normal";
+      textBox.style.fontWeight = "normal";
+    } else if (that.weight === "normal") {
+      that.weight = "bold";
+      textBox.style.fontWeight = "bold";
+    }
+  });
 
-		} else if (that.weight === "normal") {
-			that.weight = 'bold';
-			textBox.style.fontWeight = 'bold';
-		}
-	});
+  // Italics button setup
+  italicizeButton.innerHTML = "<i>I</i>";
+  italicizeButton.addEventListener("click", function (e) {
+    if (that.style === "italic") {
+      that.style = "normal";
+      textBox.style.fontStyle = "normal";
+    } else if (that.style === "normal") {
+      that.style = "italic";
+      textBox.style.fontStyle = "italic";
+    }
+  });
 
-	// Italics button setup
-	italicizeButton.innerHTML = "<i>I</i>";
-	italicizeButton.addEventListener('click', function (e) {
-		if (that.style === "italic") {
-			that.style = 'normal';
-			textBox.style.fontStyle = 'normal';
+  // Font size select setup
+  fontSizeSelect.innerHTML =
+    '<option value="2">2</option><option value="5">5</option><option value="7">7</option><option value="10">10</option>';
+  fontSizeSelect.addEventListener("change", function (e) {
+    textBox.style.fontSize = this.value + "em";
+  });
 
-		} else if (that.style === "normal") {
-			that.style = 'italic';
-			textBox.style.fontStyle = 'italic';
-		}
-	});
+  // Delete button setup
+  deleteButton.innerHTML = "&times;";
+  deleteButton.addEventListener("click", function (e) {
+    canvas.removeChild(container);
+  });
 
-	// Font size select setup
-	fontSizeSelect.innerHTML = '<option value="2">2</option><option value="5">5</option><option value="7">7</option><option value="10">10</option>';
-	fontSizeSelect.addEventListener('change', function (e) {
+  tools.style.display = "none";
+  tools.style.position = "absolute";
+  tools.style.top = "-23px";
+  tools.style.border = "1px solid #ccc";
+  tools.appendChild(boldButton);
+  tools.appendChild(italicizeButton);
+  tools.appendChild(fontSizeSelect);
+  tools.appendChild(deleteButton);
 
-		textBox.style.fontSize = this.value + 'em';
-	});
+  container.className = "text-object";
+  container.style.width = "100%";
+  container.style.position = "absolute";
+  container.style.top = this.position.top;
+  container.style.left = this.position.left;
 
-	// Delete button setup
-	deleteButton.innerHTML = "&times;";
-	deleteButton.addEventListener('click', function (e) {
-		canvas.removeChild(container);
-	});
+  container.appendChild(textBox);
+  container.appendChild(tools);
 
-	tools.style.display = "none";
-	tools.style.position = "absolute";
-	tools.style.top = "-23px";
-	tools.style.border = "1px solid #ccc";
-	tools.appendChild(boldButton);
-	tools.appendChild(italicizeButton);
-	tools.appendChild(fontSizeSelect);
-	tools.appendChild(deleteButton);
+  container.addEventListener("mouseover", function () {
+    textBox.style.borderColor = "#000";
+    tools.style.display = "block";
+  });
 
-	container.className = 'text-object';
-	container.style.width= '100%';
-	container.style.position = "absolute";
-	container.style.top = this.position.top;
-	container.style.left = this.position.left;
+  container.addEventListener("mouseleave", function () {
+    textBox.style.borderColor = "transparent";
+    tools.style.display = "none";
+  });
 
-	container.appendChild(textBox);
-	container.appendChild(tools);
+  // Editable text
+  textBox.addEventListener("dblclick", function (e) {
+    e.stopPropagation();
+    this.contentEditable = true;
+    this.focus();
+    this.style.background = "#ffffff";
+  });
 
-	container.addEventListener('mouseover', function () {
-		textBox.style.borderColor = "#000";
-		tools.style.display = "block";
-	});
+  textBox.addEventListener("blur", function () {
+    var updatedText = textBox.innerText || textBox.textContent;
 
-	container.addEventListener('mouseleave', function () {
-		textBox.style.borderColor = "transparent";
-		tools.style.display = "none";
-	});
+    that.content = updatedText;
+    this.innerHTML = updatedText;
+    this.contentEditable = false;
+    this.style.background = "transparent";
+  });
 
-	// Editable text
-	textBox.addEventListener('dblclick', function (e) {
-		e.stopPropagation();
-		this.contentEditable = true;
-		this.focus();
-		this.style.background = "#ffffff";
-	});
+  // Dragging text box
+  container.addEventListener("mousedown", function () {
+    window.addEventListener("mousemove", move);
+  });
 
-	textBox.addEventListener('blur', function () {
-		var updatedText = textBox.innerText || textBox.textContent;
+  window.addEventListener("mouseup", function () {
+    window.removeEventListener("mousemove", move);
+  });
 
-		that.content = updatedText;
-		this.innerHTML = updatedText;
-		this.contentEditable = false;
-		this.style.background = "transparent";
-	});
+  function move(e) {
+    that.position.top = e.clientY;
+    that.position.left = e.clientX;
 
-	// Dragging text box
-	container.addEventListener('mousedown', function () {
-		window.addEventListener('mousemove', move);
-	});
+    container.style.top = e.clientY + "px";
+    container.style.left = e.clientX + "px";
+  }
 
-	window.addEventListener('mouseup', function () {
-		window.removeEventListener('mousemove', move);
-	});
+  canvas.appendChild(container);
 
-	function move(e) {
-
-		that.position.top = e.clientY;
-		that.position.left = e.clientX;
-
-		container.style.top = e.clientY + 'px';
-		container.style.left = e.clientX + 'px';
-	}
-
-	canvas.appendChild(container);
-
-	this.element = textBox;
+  this.element = textBox;
 };

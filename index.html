@@ -1,71 +1,76 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title></title>
-		<style type="text/css">
-			html, body {
-				font-size: 100%;
-				height: 100%;
-				margin: 0;
-				overflow: hidden;
-				padding: 0;
-			}
 
-			#canvas {
-				background: #fff;
-				height: 100%;
-				width: 100%;
-			}
+<head>
+	<title></title>
+	<style type="text/css">
+		html,
+		body {
+			font-size: 100%;
+			height: 100%;
+			margin: 0;
+			overflow: hidden;
+			padding: 0;
+		}
 
-			body,
-			.text-object {
-				-webkit-touch-callout: none;
-			    -webkit-user-select: none;
-			    -khtml-user-select: none;
-			    -moz-user-select: none;
-			    -ms-user-select: none;
-			    user-select: none;
-			}
-		</style>
-		<script type="text/javascript" src="src/index.js"></script>
-	</head>
+		#canvas {
+			background: #fff;
+			height: 100%;
+			width: 100%;
+		}
 
-	<body>
-		<h1>Boardy Demo</h1>
+		body,
+		.text-object {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+	</style>
+	<script type="text/javascript" src="src/index.js"></script>
+</head>
 
-		<p>Double click on canvas to add object.</p>
+<body>
+	<h1>Boardy Demo</h1>
 
-		<div id="canvas"></div>
+	<p>Double click on canvas to add object.</p>
 
-		<script type="text/javascript">
-			var storage = [];
+	<div id="canvas"></div>
 
-			// Track mouse crosshair position
-			var mouseX = 0;
-			var mouseY = 0;
+	<script type="text/javascript">
+		var storage = [];
 
-			// Canvas setup
-			document.getElementById('canvas').style.background = '#efefef'; //debugging
-			document.getElementById('canvas').addEventListener('mousemove', function (e) {
-				mouseX = e.clientX;
-				mouseY = e.clientY;
-			});
+		// Track mouse crosshair position
+		var mouseX = 0;
+		var mouseY = 0;
 
-			document.getElementById('canvas').addEventListener('dblclick', function () {
+		// Canvas setup
+		document.getElementById('canvas').style.background = '#efefef'; //debugging
+		document.getElementById('canvas').addEventListener('mousemove', function (e) {
+			mouseX = e.clientX;
+			mouseY = e.clientY;
+		});
 
-				var position = {top: mouseY + 'px',
-								left: mouseX + 'px'};
+		document.getElementById('canvas').addEventListener('dblclick', function () {
 
-				var newTextBox = new Text('Text', {height: 'auto', width: 'auto'}, 'black', '5em', position, 'normal', 'normal');
+			var position = {
+				top: mouseY + 'px',
+				left: mouseX + 'px'
+			};
 
-				//push object into array
-				storage.push(newTextBox);
+			var newTextBox = new Text('Text', { height: 'auto', width: 'auto' }, 'black', '5em', position, 'normal', 'normal');
 
-				console.log(storage);
+			//push object into array
+			storage.push(newTextBox);
 
-			});
+			console.log(storage);
+
+		});
 
 
-		</script>
-	</body>
+	</script>
+</body>
+
 </html>
