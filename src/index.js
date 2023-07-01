@@ -3,19 +3,63 @@ function el(type) {
   return document.createElement(type);
 }
 
-function Canvas() {
+function Layer() {
   this.objects = [];
 }
 
-Canvas.prototype.add = function (obj) {
+Layer.prototype.add = function (obj) {
   this.objects.push(obj);
 };
 
-Canvas.prototype.draw = function () {
-  var canvas = document.getElementById("canvas");
-  canvas.innerHTML = "";
+function Boardy(selector) {
+  this.$canvas = document.querySelector(selector);
+  this.model = new Layer();
+}
 
-  this.objects.forEach(function (o) {
+Boardy.prototype.mount = function () {
+  var _this = this;
+  var $canvas = this.$canvas;
+
+  // Track mouse crosshair position
+  var MOUSE_X = 0;
+  var MOUSE_Y = 0;
+
+  $canvas.style.background = "#efefef"; //debugging
+
+  $canvas.addEventListener("mousemove", function (e) {
+    MOUSE_X = e.clientX;
+    MOUSE_Y = e.clientY;
+  });
+
+  $canvas.addEventListener("dblclick", function () {
+    var newTextBox = new Text({
+      content: "Text",
+      bounds: {
+        height: "auto",
+        width: "auto",
+      },
+      color: "black",
+      size: "5em",
+      position: {
+        top: MOUSE_Y + "px",
+        left: MOUSE_X + "px",
+      },
+      weight: "normal",
+      style: "normal",
+    });
+
+    _this.model.add(newTextBox);
+    _this.draw();
+
+    console.log(_this.model);
+  });
+};
+
+Boardy.prototype.draw = function () {
+  var $canvas = this.$canvas;
+  this.$canvas.innerHTML = "";
+
+  this.model.objects.forEach(function (o) {
     var container = el("div");
     var textBox = el("div");
 
@@ -70,7 +114,7 @@ Canvas.prototype.draw = function () {
     var deleteButton = el("button");
     deleteButton.innerHTML = "&times;";
     deleteButton.addEventListener("click", function (e) {
-      canvas.removeChild(container);
+      $canvas.removeChild(container);
     });
 
     // Controls bar
@@ -79,19 +123,14 @@ Canvas.prototype.draw = function () {
     tools.style.position = "absolute";
     tools.style.top = "-23px";
     tools.style.border = "1px solid #ccc";
-    tools.appendChild(boldButton);
-    tools.appendChild(italicizeButton);
-    tools.appendChild(fontSizeSelect);
-    tools.appendChild(deleteButton);
+    tools.append(boldButton, italicizeButton, fontSizeSelect, deleteButton);
 
     container.className = "text-object";
     container.style.width = "100%";
     container.style.position = "absolute";
     container.style.top = o.position.top;
     container.style.left = o.position.left;
-
-    container.appendChild(textBox);
-    container.appendChild(tools);
+    container.append(textBox, tools);
 
     container.addEventListener("mouseover", function () {
       textBox.style.borderColor = "#000";
@@ -138,11 +177,16 @@ Canvas.prototype.draw = function () {
       container.style.left = e.clientX + "px";
     }
 
-    canvas.appendChild(container);
+    $canvas.append(container);
   });
 };
 
+var FAKE_ID = 1;
+
 function Text({ content, bounds, color, size, position, weight, style }) {
+  this.id = FAKE_ID++;
+  this.type = "TEXT";
+
   this.bounds = bounds;
   this.content = content;
   this.color = color;

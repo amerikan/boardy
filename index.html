@@ -31,55 +31,16 @@
         user-select: none;
       }
     </style>
-    <script type="text/javascript" src="src/index.js"></script>
   </head>
 
   <body>
-    <h1>Boardy Demo</h1>
-
     <p>Double click on canvas to add object.</p>
 
     <div id="canvas"></div>
 
+    <script type="text/javascript" src="src/index.js"></script>
     <script type="text/javascript">
-      // Track mouse crosshair position
-      var mouseX = 0;
-      var mouseY = 0;
-
-      var canvas = new Canvas();
-
-      // Canvas setup
-      var $canvas = document.getElementById("canvas");
-
-      $canvas.style.background = "#efefef"; //debugging
-
-      $canvas.addEventListener("mousemove", function (e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
-
-      $canvas.addEventListener("dblclick", function () {
-        var newTextBox = new Text({
-          content: "Text",
-          bounds: {
-            height: "auto",
-            width: "auto",
-          },
-          color: "black",
-          size: "5em",
-          position: {
-            top: mouseY + "px",
-            left: mouseX + "px",
-          },
-          weight: "normal",
-          style: "normal",
-        });
-
-        canvas.add(newTextBox);
-        canvas.draw();
-
-        console.log(canvas.objects);
-      });
+      var canvas = new Boardy("#canvas").mount();
     </script>
   </body>
 </html>
