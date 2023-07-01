@@ -142,10 +142,10 @@ Boardy.prototype.draw = function () {
     container.className = "text-object";
 
     addStyles(container, {
-      width: "100%",
       position: "absolute",
       top: o.position.top,
       left: o.position.left,
+      whiteSpace: "nowrap",
     });
 
     container.append(textBox, tools);
