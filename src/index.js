@@ -1,3 +1,8 @@
+// DOM Element creation helper
+function el(type) {
+  return document.createElement(type);
+}
+
 function Canvas() {
   this.objects = [];
 }
@@ -11,14 +16,14 @@ Canvas.prototype.draw = function () {
   canvas.innerHTML = "";
 
   this.objects.forEach(function (o) {
-    var container = document.createElement("div");
-    var textBox = document.createElement("div");
+    var container = el("div");
+    var textBox = el("div");
 
-    var tools = document.createElement("div");
-    var boldButton = document.createElement("button");
-    var italicizeButton = document.createElement("button");
-    var fontSizeSelect = document.createElement("select");
-    var deleteButton = document.createElement("button");
+    var tools = el("div");
+    var boldButton = el("button");
+    var italicizeButton = el("button");
+    var fontSizeSelect = el("select");
+    var deleteButton = el("button");
 
     textBox.innerHTML = o.content;
 
