@@ -19,12 +19,6 @@ Canvas.prototype.draw = function () {
     var container = el("div");
     var textBox = el("div");
 
-    var tools = el("div");
-    var boldButton = el("button");
-    var italicizeButton = el("button");
-    var fontSizeSelect = el("select");
-    var deleteButton = el("button");
-
     textBox.innerHTML = o.content;
 
     textBox.style.border = "1px dotted transparent";
@@ -39,6 +33,7 @@ Canvas.prototype.draw = function () {
     textBox.style.height = o.bounds.height;
 
     // Bold button setup
+    var boldButton = el("button");
     boldButton.innerHTML = "<b>B</b>";
     boldButton.addEventListener("click", function (e) {
       if (o.weight === "bold") {
@@ -51,6 +46,7 @@ Canvas.prototype.draw = function () {
     });
 
     // Italics button setup
+    var italicizeButton = el("button");
     italicizeButton.innerHTML = "<i>I</i>";
     italicizeButton.addEventListener("click", function (e) {
       if (o.style === "italic") {
@@ -63,6 +59,7 @@ Canvas.prototype.draw = function () {
     });
 
     // Font size select setup
+    var fontSizeSelect = el("select");
     fontSizeSelect.innerHTML =
       '<option value="2">2</option><option value="5">5</option><option value="7">7</option><option value="10">10</option>';
     fontSizeSelect.addEventListener("change", function (e) {
@@ -70,11 +67,14 @@ Canvas.prototype.draw = function () {
     });
 
     // Delete button setup
+    var deleteButton = el("button");
     deleteButton.innerHTML = "&times;";
     deleteButton.addEventListener("click", function (e) {
       canvas.removeChild(container);
     });
 
+    // Controls bar
+    var tools = el("div");
     tools.style.display = "none";
     tools.style.position = "absolute";
     tools.style.top = "-23px";
@@ -115,6 +115,7 @@ Canvas.prototype.draw = function () {
       var updatedText = textBox.innerText || textBox.textContent;
 
       o.content = updatedText;
+
       this.innerHTML = updatedText;
       this.contentEditable = false;
       this.style.background = "transparent";
