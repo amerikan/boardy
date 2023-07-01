@@ -20,7 +20,7 @@ Layer.prototype.add = function (obj) {
   this.objects.push(obj);
 };
 
-function Boardy(selector) {
+export default function Boardy(selector) {
   this.$canvas = document.querySelector(selector);
   this.model = new Layer();
 }
