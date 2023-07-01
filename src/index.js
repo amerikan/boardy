@@ -133,8 +133,6 @@ Canvas.prototype.draw = function () {
     }
 
     canvas.appendChild(container);
-
-    o.element = textBox;
   });
 };
 
@@ -146,5 +144,4 @@ function Text({ content, bounds, color, size, position, weight, style }) {
   this.weight = weight;
   this.style = style;
   this.position = position;
-  this.element = null;
 }
