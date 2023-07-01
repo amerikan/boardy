@@ -1,76 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <title>Boardy Example</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-	<title></title>
-	<style type="text/css">
-		html,
-		body {
-			font-size: 100%;
-			height: 100%;
-			margin: 0;
-			overflow: hidden;
-			padding: 0;
-		}
+    <style type="text/css">
+      html,
+      body {
+        font-size: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+      }
 
-		#canvas {
-			background: #fff;
-			height: 100%;
-			width: 100%;
-		}
+      #canvas {
+        background: #fff;
+        height: 100%;
+        width: 100%;
+      }
 
-		body,
-		.text-object {
-			-webkit-touch-callout: none;
-			-webkit-user-select: none;
-			-khtml-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-		}
-	</style>
-	<script type="text/javascript" src="src/index.js"></script>
-</head>
+      body,
+      .text-object {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+    </style>
+    <script type="text/javascript" src="src/index.js"></script>
+  </head>
 
-<body>
-	<h1>Boardy Demo</h1>
+  <body>
+    <h1>Boardy Demo</h1>
 
-	<p>Double click on canvas to add object.</p>
+    <p>Double click on canvas to add object.</p>
 
-	<div id="canvas"></div>
+    <div id="canvas"></div>
 
-	<script type="text/javascript">
-		var storage = [];
+    <script type="text/javascript">
+      // Track mouse crosshair position
+      var mouseX = 0;
+      var mouseY = 0;
 
-		// Track mouse crosshair position
-		var mouseX = 0;
-		var mouseY = 0;
+      var canvas = new Canvas();
 
-		// Canvas setup
-		document.getElementById('canvas').style.background = '#efefef'; //debugging
-		document.getElementById('canvas').addEventListener('mousemove', function (e) {
-			mouseX = e.clientX;
-			mouseY = e.clientY;
-		});
+      // Canvas setup
+      var $canvas = document.getElementById("canvas");
 
-		document.getElementById('canvas').addEventListener('dblclick', function () {
+      $canvas.style.background = "#efefef"; //debugging
+      $canvas.addEventListener("mousemove", function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
 
-			var position = {
-				top: mouseY + 'px',
-				left: mouseX + 'px'
-			};
+      $canvas.addEventListener("dblclick", function () {
+        var position = {
+          top: mouseY + "px",
+          left: mouseX + "px",
+        };
 
-			var newTextBox = new Text('Text', { height: 'auto', width: 'auto' }, 'black', '5em', position, 'normal', 'normal');
+        var bounds = {
+          height: "auto",
+          width: "auto",
+        };
 
-			//push object into array
-			storage.push(newTextBox);
+        var newTextBox = new Text({
+          content: "Text",
+          bounds: bounds,
+          color: "black",
+          size: "5em",
+          position,
+          weight: "normal",
+          style: "normal",
+        });
 
-			console.log(storage);
+        canvas.add(newTextBox);
 
-		});
-
-
-	</script>
-</body>
-
+        console.log(canvas.objects);
+      });
+    </script>
+  </body>
 </html>

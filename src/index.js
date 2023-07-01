@@ -1,4 +1,12 @@
-function Text(content, bounds, color, size, position, weight, style) {
+function Canvas() {
+  this.objects = [];
+}
+
+Canvas.prototype.add = function (obj) {
+  this.objects.push(obj);
+};
+
+function Text({ content, bounds, color, size, position, weight, style }) {
   this.bounds = bounds;
   this.content = content;
   this.color = color;
