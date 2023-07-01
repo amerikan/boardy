@@ -52,6 +52,7 @@
       var $canvas = document.getElementById("canvas");
 
       $canvas.style.background = "#efefef"; //debugging
+
       $canvas.addEventListener("mousemove", function (e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
@@ -79,6 +80,8 @@
         });
 
         canvas.add(newTextBox);
+
+        canvas.draw();
 
         console.log(canvas.objects);
       });
