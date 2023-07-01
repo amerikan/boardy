@@ -59,28 +59,23 @@
       });
 
       $canvas.addEventListener("dblclick", function () {
-        var position = {
-          top: mouseY + "px",
-          left: mouseX + "px",
-        };
-
-        var bounds = {
-          height: "auto",
-          width: "auto",
-        };
-
         var newTextBox = new Text({
           content: "Text",
-          bounds: bounds,
+          bounds: {
+            height: "auto",
+            width: "auto",
+          },
           color: "black",
           size: "5em",
-          position,
+          position: {
+            top: mouseY + "px",
+            left: mouseX + "px",
+          },
           weight: "normal",
           style: "normal",
         });
 
         canvas.add(newTextBox);
-
         canvas.draw();
 
         console.log(canvas.objects);
