@@ -3,6 +3,15 @@ function el(type) {
   return document.createElement(type);
 }
 
+// Add styles in mass helper
+function addStyles(el, styles) {
+  for (var style in styles) {
+    el.style[style] = styles[style];
+  }
+
+  return el;
+}
+
 function Layer() {
   this.objects = [];
 }
@@ -65,16 +74,17 @@ Boardy.prototype.draw = function () {
 
     textBox.innerHTML = o.content;
 
-    textBox.style.border = "1px dotted transparent";
-    textBox.style.display = "block";
-    textBox.style.position = "relative";
-    textBox.style.cursor = "move";
-
-    textBox.style.fontSize = o.size;
-    textBox.style.fontWeight = o.weight;
-    textBox.style.color = o.color;
-    textBox.style.width = o.bounds.width;
-    textBox.style.height = o.bounds.height;
+    addStyles(textBox, {
+      border: "1px dotted transparent",
+      display: "block",
+      position: "relative",
+      cursor: "move",
+      fontSize: o.size,
+      fontWeight: o.weight,
+      color: o.color,
+      width: o.bounds.width,
+      height: o.bounds.height,
+    });
 
     // Bold button setup
     var boldButton = el("button");
@@ -119,17 +129,25 @@ Boardy.prototype.draw = function () {
 
     // Controls bar
     var tools = el("div");
-    tools.style.display = "none";
-    tools.style.position = "absolute";
-    tools.style.top = "-23px";
-    tools.style.border = "1px solid #ccc";
+
+    addStyles(tools, {
+      display: "none",
+      position: "absolute",
+      top: "-23px",
+      border: "1px solid #ccc",
+    });
+
     tools.append(boldButton, italicizeButton, fontSizeSelect, deleteButton);
 
     container.className = "text-object";
-    container.style.width = "100%";
-    container.style.position = "absolute";
-    container.style.top = o.position.top;
-    container.style.left = o.position.left;
+
+    addStyles(container, {
+      width: "100%",
+      position: "absolute",
+      top: o.position.top,
+      left: o.position.left,
+    });
+
     container.append(textBox, tools);
 
     container.addEventListener("mouseover", function () {
