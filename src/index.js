@@ -8,20 +8,26 @@ Layer.prototype.add = function (obj) {
   this.objects.push(obj);
 };
 
+Layer.prototype.remove = function (id) {
+  const idx = this.objects.findIndex((o) => o.id === id);
+
+  this.objects.splice(idx, 1);
+
+  console.log(this.objects);
+};
+
 export default function Boardy(selector) {
   this.$canvas = document.querySelector(selector);
   this.model = new Layer();
 }
 
 Boardy.prototype.mount = function () {
-  var _this = this;
-  var $canvas = this.$canvas;
+  const _this = this;
+  const $canvas = this.$canvas;
 
   // Track mouse crosshair position
-  var MOUSE_X = 0;
-  var MOUSE_Y = 0;
-
-  $canvas.style.background = "#efefef"; //debugging
+  let MOUSE_X = 0;
+  let MOUSE_Y = 0;
 
   $canvas.addEventListener("mousemove", function (e) {
     MOUSE_X = e.clientX;
@@ -29,7 +35,7 @@ Boardy.prototype.mount = function () {
   });
 
   $canvas.addEventListener("dblclick", function () {
-    var newTextBox = new Text({
+    const newTextBox = new Text({
       position: {
         top: MOUSE_Y + "px",
         left: MOUSE_X + "px",
@@ -44,11 +50,11 @@ Boardy.prototype.mount = function () {
 };
 
 Boardy.prototype.render = function () {
-  var $canvas = this.$canvas;
-  this.$canvas.innerHTML = "";
+  const _this = this;
+  const $canvas = this.$canvas;
 
-  this.model.objects.forEach(function (o) {
-    var textBox = el(
+  const content = this.model.objects.map(function (o) {
+    const textBox = el(
       "div",
       {
         style: {
@@ -65,15 +71,16 @@ Boardy.prototype.render = function () {
         },
         ondblclick: function (e) {
           e.stopPropagation();
+
           this.contentEditable = true;
           this.focus();
         },
         onblur: function (e) {
-          var updatedText = textBox.innerText || textBox.textContent;
+          // Update Model
+          o.content = this.innerText || this.textContent;
 
-          o.content = updatedText;
-
-          this.innerHTML = updatedText;
+          // Update UI
+          this.innerHTML = o.content;
           this.contentEditable = false;
           this.style.background = "transparent";
         },
@@ -82,16 +89,18 @@ Boardy.prototype.render = function () {
     );
 
     // Bold button setup
-    var boldButton = el(
+    const boldButton = el(
       "button",
       {
         onclick: function (e) {
+          // Update Model
           if (o.weight === "bold") {
             o.weight = "normal";
           } else if (o.weight === "normal") {
             o.weight = "bold";
           }
 
+          // Update UI
           textBox.style.fontWeight = o.weight;
         },
       },
@@ -99,16 +108,18 @@ Boardy.prototype.render = function () {
     );
 
     // Italics button setup
-    var italicizeButton = el(
+    const italicizeButton = el(
       "button",
       {
         onclick: function (e) {
+          // Update Model
           if (o.style === "italic") {
             o.style = "normal";
           } else if (o.style === "normal") {
             o.style = "italic";
           }
 
+          // Update UI
           textBox.style.fontStyle = o.style;
         },
       },
@@ -116,7 +127,7 @@ Boardy.prototype.render = function () {
     );
 
     // Font size select setup
-    var sizeOptions = [2, 5, 7, 10].map((size) =>
+    const sizeOptions = [2, 5, 7, 10].map((size) =>
       el(
         "option",
         {
@@ -126,11 +137,14 @@ Boardy.prototype.render = function () {
       )
     );
 
-    var fontSizeSelect = el(
+    const fontSizeSelect = el(
       "select",
       {
         onchange: function (e) {
+          // Update model
           o.size = this.value + "em";
+
+          // Update UI
           textBox.style.fontSize = o.size;
         },
       },
@@ -138,18 +152,22 @@ Boardy.prototype.render = function () {
     );
 
     // Delete button setup
-    var deleteButton = el(
+    const deleteButton = el(
       "button",
       {
         onclick: function (e) {
+          // Update Model
+          _this.model.remove(o.id);
+
+          // Update UI
           $canvas.removeChild(container);
         },
       },
-      "&times;"
+      "x"
     );
 
     // Controls bar
-    var tools = el(
+    const tools = el(
       "div",
       {
         style: {
@@ -165,7 +183,7 @@ Boardy.prototype.render = function () {
       deleteButton
     );
 
-    var container = el(
+    const container = el(
       "div",
       {
         className: "text-object",
@@ -176,10 +194,12 @@ Boardy.prototype.render = function () {
           whiteSpace: "nowrap",
         },
         onmouseover: function () {
+          // Update UI
           textBox.style.borderColor = "#000";
           tools.style.display = "block";
         },
         onmouseleave: function () {
+          // Update UI
           textBox.style.borderColor = "transparent";
           tools.style.display = "none";
         },
@@ -196,18 +216,22 @@ Boardy.prototype.render = function () {
     });
 
     function move(e) {
+      // Update Model
       o.position.top = e.clientY + "px";
       o.position.left = e.clientX + "px";
 
+      // Update UI
       container.style.top = e.clientY + "px";
       container.style.left = e.clientX + "px";
     }
 
-    $canvas.append(container);
+    return container;
   });
+
+  $canvas.append(...content);
 };
 
-var FAKE_ID = 1;
+let FAKE_ID = 1;
 
 function Text({
   content = "Text",
