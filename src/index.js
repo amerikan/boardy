@@ -115,8 +115,18 @@ Boardy.prototype.render = function () {
 
     // Font size select setup
     var fontSizeSelect = el("select");
-    fontSizeSelect.innerHTML =
-      '<option value="2">2</option><option value="5">5</option><option value="7">7</option><option value="10">10</option>';
+
+    fontSizeSelect.append(
+      ...[2, 5, 7, 10].map((size) => {
+        const optionEl = el("option");
+
+        optionEl.value = size;
+        optionEl.innerHTML = size;
+
+        return optionEl;
+      })
+    );
+
     fontSizeSelect.addEventListener("change", function (e) {
       textBox.style.fontSize = this.value + "em";
     });
