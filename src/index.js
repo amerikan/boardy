@@ -185,6 +185,11 @@ export default class Boardy {
         deleteButton
       );
 
+      const containerPointerPosition = {
+        x: null,
+        y: null,
+      };
+
       const container = el(
         "div",
         {
@@ -205,8 +210,11 @@ export default class Boardy {
             textBox.style.borderColor = "transparent";
             tools.style.display = "none";
           },
-          onmousedown: function () {
+          onmousedown: function (e) {
             window.addEventListener("mousemove", move);
+
+            containerPointerPosition.x = e.pageX - e.currentTarget.offsetLeft;
+            containerPointerPosition.y = e.pageY - e.currentTarget.offsetTop;
           },
         },
         textBox,
@@ -219,12 +227,12 @@ export default class Boardy {
 
       function move(e) {
         // Update Model
-        o.position.top = e.clientY + "px";
-        o.position.left = e.clientX + "px";
+        o.position.left = e.clientX - containerPointerPosition.x + "px";
+        o.position.top = e.clientY - containerPointerPosition.y + "px";
 
         // Update UI
-        container.style.top = e.clientY + "px";
-        container.style.left = e.clientX + "px";
+        container.style.left = e.clientX - containerPointerPosition.x + "px";
+        container.style.top = e.clientY - containerPointerPosition.y + "px";
       }
 
       return container;
