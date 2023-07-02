@@ -1,6 +1,12 @@
 // DOM Element creation helper
-export function el(type) {
-  return document.createElement(type);
+export function el(type, props) {
+  const newEl = document.createElement(type);
+
+  if (props) {
+    Object.assign(newEl, props);
+  }
+
+  return newEl;
 }
 
 // Add styles in mass helper

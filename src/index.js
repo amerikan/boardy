@@ -57,7 +57,10 @@ Boardy.prototype.render = function () {
   this.$canvas.innerHTML = "";
 
   this.model.objects.forEach(function (o) {
-    var container = el("div");
+    var container = el("div", {
+      className: "text-object",
+    });
+
     var textBox = el("div");
 
     textBox.innerHTML = o.content;
@@ -137,8 +140,6 @@ Boardy.prototype.render = function () {
     });
 
     tools.append(boldButton, italicizeButton, fontSizeSelect, deleteButton);
-
-    container.className = "text-object";
 
     addStyles(container, {
       position: "absolute",
