@@ -1,5 +1,5 @@
 // DOM Element creation helper
-export function el(type, props) {
+export function el(type, props, ...children) {
   const newEl = document.createElement(type);
 
   if (props) {
@@ -16,6 +16,8 @@ export function el(type, props) {
       }
     }
   }
+
+  newEl.append(...children);
 
   return newEl;
 }
