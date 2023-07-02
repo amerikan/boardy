@@ -80,6 +80,7 @@ Boardy.prototype.render = function () {
       position: "relative",
       cursor: "move",
       fontSize: o.size,
+      fontStyle: o.style,
       fontWeight: o.weight,
       color: o.color,
       width: o.bounds.width,
@@ -92,11 +93,11 @@ Boardy.prototype.render = function () {
     boldButton.addEventListener("click", function (e) {
       if (o.weight === "bold") {
         o.weight = "normal";
-        textBox.style.fontWeight = "normal";
       } else if (o.weight === "normal") {
         o.weight = "bold";
-        textBox.style.fontWeight = "bold";
       }
+
+      textBox.style.fontWeight = o.weight;
     });
 
     // Italics button setup
@@ -105,11 +106,11 @@ Boardy.prototype.render = function () {
     italicizeButton.addEventListener("click", function (e) {
       if (o.style === "italic") {
         o.style = "normal";
-        textBox.style.fontStyle = "normal";
       } else if (o.style === "normal") {
         o.style = "italic";
-        textBox.style.fontStyle = "italic";
       }
+
+      textBox.style.fontStyle = o.style;
     });
 
     // Font size select setup
