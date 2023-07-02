@@ -56,6 +56,17 @@ Boardy.prototype.render = function () {
         left: o.position.left,
         whiteSpace: "nowrap",
       },
+      onmouseover: function () {
+        textBox.style.borderColor = "#000";
+        tools.style.display = "block";
+      },
+      onmouseleave: function () {
+        textBox.style.borderColor = "transparent";
+        tools.style.display = "none";
+      },
+      onmousedown: function () {
+        window.addEventListener("mousemove", move);
+      },
     });
 
     var textBox = el("div", {
@@ -71,38 +82,60 @@ Boardy.prototype.render = function () {
         width: o.bounds.width,
         height: o.bounds.height,
       },
+      ondblclick: function (e) {
+        e.stopPropagation();
+        this.contentEditable = true;
+        this.focus();
+      },
+      onblur: function (e) {
+        var updatedText = textBox.innerText || textBox.textContent;
+
+        o.content = updatedText;
+
+        this.innerHTML = updatedText;
+        this.contentEditable = false;
+        this.style.background = "transparent";
+      },
     });
 
     textBox.innerHTML = o.content;
 
     // Bold button setup
-    var boldButton = el("button");
-    boldButton.innerHTML = "<b>B</b>";
-    boldButton.addEventListener("click", function (e) {
-      if (o.weight === "bold") {
-        o.weight = "normal";
-      } else if (o.weight === "normal") {
-        o.weight = "bold";
-      }
+    var boldButton = el("button", {
+      onclick: function (e) {
+        if (o.weight === "bold") {
+          o.weight = "normal";
+        } else if (o.weight === "normal") {
+          o.weight = "bold";
+        }
 
-      textBox.style.fontWeight = o.weight;
+        textBox.style.fontWeight = o.weight;
+      },
     });
+
+    boldButton.innerHTML = "<b>B</b>";
 
     // Italics button setup
-    var italicizeButton = el("button");
-    italicizeButton.innerHTML = "<i>I</i>";
-    italicizeButton.addEventListener("click", function (e) {
-      if (o.style === "italic") {
-        o.style = "normal";
-      } else if (o.style === "normal") {
-        o.style = "italic";
-      }
+    var italicizeButton = el("button", {
+      onclick: function (e) {
+        if (o.style === "italic") {
+          o.style = "normal";
+        } else if (o.style === "normal") {
+          o.style = "italic";
+        }
 
-      textBox.style.fontStyle = o.style;
+        textBox.style.fontStyle = o.style;
+      },
     });
 
+    italicizeButton.innerHTML = "<i>I</i>";
+
     // Font size select setup
-    var fontSizeSelect = el("select");
+    var fontSizeSelect = el("select", {
+      onchange: function (e) {
+        textBox.style.fontSize = this.value + "em";
+      },
+    });
 
     fontSizeSelect.append(
       ...[2, 5, 7, 10].map((size) => {
@@ -116,16 +149,14 @@ Boardy.prototype.render = function () {
       })
     );
 
-    fontSizeSelect.addEventListener("change", function (e) {
-      textBox.style.fontSize = this.value + "em";
+    // Delete button setup
+    var deleteButton = el("button", {
+      onclick: function (e) {
+        $canvas.removeChild(container);
+      },
     });
 
-    // Delete button setup
-    var deleteButton = el("button");
     deleteButton.innerHTML = "&times;";
-    deleteButton.addEventListener("click", function (e) {
-      $canvas.removeChild(container);
-    });
 
     // Controls bar
     var tools = el("div", {
@@ -140,39 +171,6 @@ Boardy.prototype.render = function () {
     tools.append(boldButton, italicizeButton, fontSizeSelect, deleteButton);
 
     container.append(textBox, tools);
-
-    container.addEventListener("mouseover", function () {
-      textBox.style.borderColor = "#000";
-      tools.style.display = "block";
-    });
-
-    container.addEventListener("mouseleave", function () {
-      textBox.style.borderColor = "transparent";
-      tools.style.display = "none";
-    });
-
-    // Editable text
-    textBox.addEventListener("dblclick", function (e) {
-      e.stopPropagation();
-      this.contentEditable = true;
-      this.focus();
-      this.style.background = "#ffffff";
-    });
-
-    textBox.addEventListener("blur", function () {
-      var updatedText = textBox.innerText || textBox.textContent;
-
-      o.content = updatedText;
-
-      this.innerHTML = updatedText;
-      this.contentEditable = false;
-      this.style.background = "transparent";
-    });
-
-    // Dragging text box
-    container.addEventListener("mousedown", function () {
-      window.addEventListener("mousemove", move);
-    });
 
     window.addEventListener("mouseup", function () {
       window.removeEventListener("mousemove", move);
