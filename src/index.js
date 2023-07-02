@@ -30,19 +30,10 @@ Boardy.prototype.mount = function () {
 
   $canvas.addEventListener("dblclick", function () {
     var newTextBox = new Text({
-      content: "Text",
-      bounds: {
-        height: "auto",
-        width: "auto",
-      },
-      color: "black",
-      size: "5em",
       position: {
         top: MOUSE_Y + "px",
         left: MOUSE_X + "px",
       },
-      weight: "normal",
-      style: "normal",
     });
 
     _this.model.add(newTextBox);
@@ -201,15 +192,26 @@ Boardy.prototype.render = function () {
 
 var FAKE_ID = 1;
 
-function Text({ content, bounds, color, size, position, weight, style }) {
+function Text({
+  content = "Text",
+  bounds = {
+    height: "auto",
+    width: "auto",
+  },
+  color = "black",
+  size = "5em",
+  position,
+  weight = "normal",
+  style = "normal",
+}) {
   this.id = FAKE_ID++;
   this.type = "TEXT";
 
-  this.bounds = bounds;
   this.content = content;
+  this.bounds = bounds;
   this.color = color;
   this.size = size;
+  this.position = position;
   this.weight = weight;
   this.style = style;
-  this.position = position;
 }
