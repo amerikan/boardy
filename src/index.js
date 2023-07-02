@@ -188,8 +188,8 @@ Boardy.prototype.render = function () {
     });
 
     function move(e) {
-      o.position.top = e.clientY;
-      o.position.left = e.clientX;
+      o.position.top = e.clientY + "px";
+      o.position.left = e.clientX + "px";
 
       container.style.top = e.clientY + "px";
       container.style.left = e.clientX + "px";
