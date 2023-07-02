@@ -1,16 +1,4 @@
-// DOM Element creation helper
-function el(type) {
-  return document.createElement(type);
-}
-
-// Add styles in mass helper
-function addStyles(el, styles) {
-  for (var style in styles) {
-    el.style[style] = styles[style];
-  }
-
-  return el;
-}
+import { el, addStyles } from "./utils";
 
 function Layer() {
   this.objects = [];
