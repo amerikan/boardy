@@ -20,23 +20,23 @@ class Layer {
 
 export default class Boardy {
   constructor(selector) {
-    this.$canvas = document.querySelector(selector);
+    this.$root = document.querySelector(selector);
     this.model = new Layer();
   }
 
   mount() {
-    const $canvas = this.$canvas;
+    const $root = this.$root;
 
     // Track mouse crosshair position
     let MOUSE_X = 0;
     let MOUSE_Y = 0;
 
-    $canvas.addEventListener("mousemove", function (e) {
+    $root.addEventListener("mousemove", function (e) {
       MOUSE_X = e.clientX;
       MOUSE_Y = e.clientY;
     });
 
-    $canvas.addEventListener("dblclick", () => {
+    $root.addEventListener("dblclick", () => {
       const newTextBox = new Text({
         position: {
           top: MOUSE_Y + "px",
@@ -53,7 +53,7 @@ export default class Boardy {
 
   render() {
     const _this = this;
-    const $canvas = this.$canvas;
+    const $root = this.$root;
 
     const content = this.model.objects.map(function (o) {
       const textBox = el(
@@ -162,7 +162,7 @@ export default class Boardy {
             _this.model.remove(o.id);
 
             // Update UI
-            $canvas.removeChild(container);
+            $root.removeChild(container);
           },
         },
         "x"
@@ -238,7 +238,7 @@ export default class Boardy {
       return container;
     });
 
-    $canvas.append(...content);
+    $root.append(...content);
   }
 }
 
