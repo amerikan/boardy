@@ -4,16 +4,18 @@ export function el(type, props) {
 
   if (props) {
     Object.assign(newEl, props);
+
+    const styles = props?.style;
+
+    // Handle inline style
+    if (styles) {
+      for (const style in styles) {
+        if (Object.hasOwn(styles, style)) {
+          newEl.style[style] = styles[style];
+        }
+      }
+    }
   }
 
   return newEl;
-}
-
-// Add styles in mass helper
-export function addStyles(el, styles) {
-  for (var style in styles) {
-    el.style[style] = styles[style];
-  }
-
-  return el;
 }

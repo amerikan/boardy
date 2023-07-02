@@ -1,4 +1,4 @@
-import { el, addStyles } from "./utils";
+import { el } from "./utils";
 
 function Layer() {
   this.objects = [];
@@ -50,24 +50,30 @@ Boardy.prototype.render = function () {
   this.model.objects.forEach(function (o) {
     var container = el("div", {
       className: "text-object",
+      style: {
+        position: "absolute",
+        top: o.position.top,
+        left: o.position.left,
+        whiteSpace: "nowrap",
+      },
     });
 
-    var textBox = el("div");
+    var textBox = el("div", {
+      style: {
+        border: "1px dotted transparent",
+        display: "block",
+        position: "relative",
+        cursor: "move",
+        fontSize: o.size,
+        fontStyle: o.style,
+        fontWeight: o.weight,
+        color: o.color,
+        width: o.bounds.width,
+        height: o.bounds.height,
+      },
+    });
 
     textBox.innerHTML = o.content;
-
-    addStyles(textBox, {
-      border: "1px dotted transparent",
-      display: "block",
-      position: "relative",
-      cursor: "move",
-      fontSize: o.size,
-      fontStyle: o.style,
-      fontWeight: o.weight,
-      color: o.color,
-      width: o.bounds.width,
-      height: o.bounds.height,
-    });
 
     // Bold button setup
     var boldButton = el("button");
@@ -100,9 +106,10 @@ Boardy.prototype.render = function () {
 
     fontSizeSelect.append(
       ...[2, 5, 7, 10].map((size) => {
-        const optionEl = el("option");
+        const optionEl = el("option", {
+          value: size,
+        });
 
-        optionEl.value = size;
         optionEl.innerHTML = size;
 
         return optionEl;
@@ -121,23 +128,16 @@ Boardy.prototype.render = function () {
     });
 
     // Controls bar
-    var tools = el("div");
-
-    addStyles(tools, {
-      display: "none",
-      position: "absolute",
-      top: "-23px",
-      border: "1px solid #ccc",
+    var tools = el("div", {
+      style: {
+        display: "none",
+        position: "absolute",
+        top: "-23px",
+        border: "1px solid #ccc",
+      },
     });
 
     tools.append(boldButton, italicizeButton, fontSizeSelect, deleteButton);
-
-    addStyles(container, {
-      position: "absolute",
-      top: o.position.top,
-      left: o.position.left,
-      whiteSpace: "nowrap",
-    });
 
     container.append(textBox, tools);
 
