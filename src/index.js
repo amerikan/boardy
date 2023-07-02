@@ -58,13 +58,13 @@ Boardy.prototype.mount = function () {
     });
 
     _this.model.add(newTextBox);
-    _this.draw();
+    _this.render();
 
     console.log(_this.model);
   });
 };
 
-Boardy.prototype.draw = function () {
+Boardy.prototype.render = function () {
   var $canvas = this.$canvas;
   this.$canvas.innerHTML = "";
 
