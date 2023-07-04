@@ -215,7 +215,7 @@ export default class Boardy {
             tools.style.display = "none";
           },
           onmousedown: function (e) {
-            window.addEventListener("mousemove", move);
+            window.addEventListener("mousemove", handleMove);
 
             containerPointerPosition.x = e.pageX - e.currentTarget.offsetLeft;
             containerPointerPosition.y = e.pageY - e.currentTarget.offsetTop;
@@ -226,10 +226,10 @@ export default class Boardy {
       );
 
       window.addEventListener("mouseup", function () {
-        window.removeEventListener("mousemove", move);
+        window.removeEventListener("mousemove", handleMove);
       });
 
-      function move(e) {
+      function handleMove(e) {
         // Update Model
         o.position.left = e.clientX - containerPointerPosition.x + "px";
         o.position.top = e.clientY - containerPointerPosition.y + "px";
