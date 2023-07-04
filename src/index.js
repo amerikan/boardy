@@ -49,11 +49,15 @@ export default class Boardy {
 
       console.log(this.model);
     });
+
+    this.render();
   }
 
   render() {
     const _this = this;
     const $root = this.$root;
+
+    $root.innerHTML = "";
 
     const content = this.model.objects.map(function (o) {
       const textBox = el(
