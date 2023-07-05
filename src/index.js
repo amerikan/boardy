@@ -1,5 +1,13 @@
 import { el } from "./utils";
 
+import Panels from "./components/Panels";
+import Toolbar from "./components/Toolbar";
+
+import BoldButton from "./components/BoldButton";
+import ItalicizeButton from "./components/ItalicizeButton";
+import DeleteButton from "./components/DeleteButton";
+import FontSizeSelect from "./components/FontSizeSelect";
+
 class Layer {
   constructor() {
     this.objects = [];
@@ -94,89 +102,6 @@ export default class Boardy {
         o.content
       );
 
-      // Bold button setup
-      const boldButton = () =>
-        el(
-          "button",
-          {
-            onclick: function (e) {
-              // Update Model
-              if (o.weight === "bold") {
-                o.weight = "normal";
-              } else if (o.weight === "normal") {
-                o.weight = "bold";
-              }
-
-              // Update UI
-              textBox.style.fontWeight = o.weight;
-            },
-          },
-          el("b", null, "B")
-        );
-
-      // Italics button setup
-      const italicizeButton = () =>
-        el(
-          "button",
-          {
-            onclick: function (e) {
-              // Update Model
-              if (o.style === "italic") {
-                o.style = "normal";
-              } else if (o.style === "normal") {
-                o.style = "italic";
-              }
-
-              // Update UI
-              textBox.style.fontStyle = o.style;
-            },
-          },
-          el("i", null, "I")
-        );
-
-      // Font size select setup
-      const sizeOptions = () =>
-        [2, 5, 7, 10].map((size) =>
-          el(
-            "option",
-            {
-              value: size,
-            },
-            size
-          )
-        );
-
-      const fontSizeSelect = () =>
-        el(
-          "select",
-          {
-            onchange: function (e) {
-              // Update model
-              o.size = this.value + "em";
-
-              // Update UI
-              textBox.style.fontSize = o.size;
-            },
-          },
-          ...sizeOptions()
-        );
-
-      // Delete button setup
-      const deleteButton = () =>
-        el(
-          "button",
-          {
-            onclick: function (e) {
-              // Update Model
-              _this.model.remove(o.id);
-
-              // Update UI
-              container.parentNode.removeChild(container);
-            },
-          },
-          "x"
-        );
-
       // Controls bar
       const tools = el(
         "div",
@@ -188,10 +113,52 @@ export default class Boardy {
             border: "1px solid #ccc",
           },
         },
-        boldButton(),
-        italicizeButton(),
-        fontSizeSelect(),
-        deleteButton()
+        BoldButton({
+          isActive: o.weight === "bold",
+          onclick: function (e) {
+            // Update Model
+            if (o.weight === "bold") {
+              o.weight = "normal";
+            } else if (o.weight === "normal") {
+              o.weight = "bold";
+            }
+
+            // Update UI
+            _this.render();
+          },
+        }),
+        ItalicizeButton({
+          isActive: o.style === "italic",
+          onclick: function (e) {
+            // Update Model
+            if (o.style === "italic") {
+              o.style = "normal";
+            } else if (o.style === "normal") {
+              o.style = "italic";
+            }
+
+            // Update UI
+            _this.render();
+          },
+        }),
+        FontSizeSelect({
+          onchange: function (e) {
+            // Update model
+            o.size = this.value + "em";
+
+            // Update UI
+            _this.render();
+          },
+        }),
+        DeleteButton({
+          onclick: function (e) {
+            // Update Model
+            _this.model.remove(o.id);
+
+            // Update UI
+            _this.render();
+          },
+        })
       );
 
       const containerPointerPosition = {
@@ -247,79 +214,6 @@ export default class Boardy {
       return container;
     });
 
-    const textTool = () =>
-      el(
-        "div",
-        {
-          title: "Text tool",
-          style: {
-            border: "1px solid black",
-            padding: "10px",
-          },
-        },
-        "T"
-      );
-
-    const toolbar = () =>
-      el(
-        "div",
-        {
-          style: {
-            background: "#ccc",
-            border: "1px solid black",
-            width: "30px",
-          },
-        },
-        textTool()
-      );
-
-    const infoPanel = () =>
-      el(
-        "div",
-        {
-          style: {
-            border: "1px solid black",
-          },
-        },
-        el("p", null, `x: 0 y: 0`)
-      );
-
-    const propertiesPanel = () =>
-      el(
-        "div",
-        {
-          style: {
-            border: "2px solid black",
-          },
-        },
-        "TODO: object props"
-      );
-
-    const layersPanel = () =>
-      el(
-        "div",
-        {
-          style: {
-            border: "2px solid black",
-          },
-        },
-        "TODO: layers"
-      );
-
-    const panels = () =>
-      el(
-        "div",
-        {
-          style: {
-            background: "#ccc",
-            width: "300px",
-          },
-        },
-        infoPanel(),
-        propertiesPanel(),
-        layersPanel()
-      );
-
     const canvas = () =>
       el(
         "div",
@@ -344,9 +238,9 @@ export default class Boardy {
             height: "100%",
           },
         },
-        toolbar(),
+        Toolbar(),
         canvas(),
-        panels()
+        Panels()
       );
 
     $root.appendChild(app());
