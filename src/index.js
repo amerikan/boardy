@@ -14,7 +14,7 @@ class Layer {
 
     this.objects.splice(idx, 1);
 
-    console.log(this.objects);
+    console.log(id, this.objects);
   }
 }
 
@@ -166,7 +166,7 @@ export default class Boardy {
             _this.model.remove(o.id);
 
             // Update UI
-            $root.removeChild(container);
+            container.parentNode.removeChild(container);
           },
         },
         "x"
@@ -242,7 +242,87 @@ export default class Boardy {
       return container;
     });
 
-    $root.append(...content);
+    const textTool = el(
+      "div",
+      {
+        title: "Text tool",
+        style: {
+          border: "1px solid black",
+          padding: "10px",
+        },
+      },
+      "T"
+    );
+
+    const toolbar = el(
+      "div",
+      {
+        style: {
+          background: "#ccc",
+          border: "1px solid black",
+          width: "30px",
+        },
+      },
+      textTool
+    );
+
+    const infoPanel = el(
+      "div",
+      {
+        style: {
+          border: "1px solid black",
+        },
+      },
+      el("p", null, `x: 0 y: 0`)
+    );
+
+    const propertiesPanel = el(
+      "div",
+      {
+        style: {
+          border: "2px solid black",
+        },
+      },
+      "TODO: object props"
+    );
+
+    const layersPanel = el(
+      "div",
+      {
+        style: {
+          border: "2px solid black",
+        },
+      },
+      "TODO: layers"
+    );
+
+    const panels = el(
+      "div",
+      {
+        style: {
+          background: "#ccc",
+          width: "300px",
+        },
+      },
+      infoPanel,
+      propertiesPanel,
+      layersPanel
+    );
+
+    const canvas = el(
+      "div",
+      {
+        style: {
+          border: "1px solid black",
+          width: "calc(100% - 300px - 30px)",
+          overflow: "hidden",
+          position: "relative",
+        },
+      },
+      ...content
+    );
+
+    $root.append(toolbar, canvas, panels);
   }
 }
 
