@@ -1,5 +1,7 @@
 # Boardy
 
+⚠️ UNDER ACTIVE DEVELOPMENT, not ready for production use.
+
 Add styled text, images, or shapes anywhere on a canvas to create slides.
 
 ## Demo
