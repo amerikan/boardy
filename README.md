@@ -1,6 +1,6 @@
 # Boardy
 
-⚠️ UNDER ACTIVE DEVELOPMENT, not ready for production use.
+⚠️ UNDER ACTIVE DEVELOPMENT, not ready for production use!
 
 Add styled text, images, or shapes anywhere on a canvas to create slides.
 
@@ -24,7 +24,7 @@ Add styled text, images, or shapes anywhere on a canvas to create slides.
 </html>
 ```
 
-# Development
+## Development
 
-1. Start up LiveServer
-2. Run `npm start`
+1. Run `npm start` to start local development server.
+2. Open <http://localhost:8080/>.
