@@ -1,6 +1,6 @@
 import { el } from "../../utils";
 
-export default function ({ onclick }) {
+export default function DeleteButton({ onclick }) {
   return el(
     "button",
     {

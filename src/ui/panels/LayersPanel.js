@@ -1,6 +1,6 @@
 import { el } from "../../utils";
 
-export default function () {
+export default function LayersPanel() {
   return el(
     "div",
     {

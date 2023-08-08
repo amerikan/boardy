@@ -14,7 +14,7 @@ function SizeOptions() {
   );
 }
 
-export default function ({ onchange }) {
+export default function FontSizeSelect({ onchange }) {
   return el(
     "select",
     {

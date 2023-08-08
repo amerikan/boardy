@@ -1,6 +1,6 @@
 import { el } from "../../utils";
 
-export default function ({ isActive, onclick }) {
+export default function BoldButton({ isActive, onclick }) {
   return el(
     "button",
     {

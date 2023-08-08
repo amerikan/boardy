@@ -2,7 +2,7 @@ import { el } from "../../utils";
 
 import TextTool from "../tools/TextTool";
 
-export default function () {
+export default function Toolbar() {
   return el(
     "div",
     {

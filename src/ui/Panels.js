@@ -4,7 +4,7 @@ import InfoPanel from "./panels/InfoPanel";
 import PropertiesPanel from "./panels/PropertiesPanel";
 import LayersPanel from "./panels/LayersPanel";
 
-export default function () {
+export default function Panels() {
   return el(
     "div",
     {

@@ -1,6 +1,6 @@
 import { el } from "../../utils";
 
-export default function ({ isActive, onclick }) {
+export default function ItalicizeButton({ isActive, onclick }) {
   return el(
     "button",
     {
