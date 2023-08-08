@@ -1,34 +1,19 @@
 import { el } from "./utils";
 
 import App from "./components/App";
-import Canvas from "./components/Canvas";
+import Board from "./components/Board";
 
 import Panels from "./components/Panels";
-import Toolbar from "./components/Toolbar";
+import Toolbar from "./components/bars/Toolbar";
 
-import BoldButton from "./components/BoldButton";
-import ItalicizeButton from "./components/ItalicizeButton";
-import DeleteButton from "./components/DeleteButton";
-import FontSizeSelect from "./components/FontSizeSelect";
+import BoldButton from "./components/menus/BoldButton";
+import ItalicizeButton from "./components/menus/ItalicizeButton";
+import DeleteButton from "./components/menus/DeleteButton";
+import FontSizeSelect from "./components/menus/FontSizeSelect";
 
-class Layer {
-  constructor() {
-    this.objects = [];
-  }
+import Layer from "./controllers/Layer";
 
-  add(obj) {
-    this.objects.push(obj);
-  }
-
-  remove(id) {
-    const idx = this.objects.findIndex((o) => o.id === id);
-
-    this.objects.splice(idx, 1);
-
-    console.log(id, this.objects);
-  }
-}
-
+import Text from "./models/Text";
 export default class Boardy {
   constructor(selector) {
     this.$root = document.querySelector(selector);
@@ -218,40 +203,12 @@ export default class Boardy {
       App({
         children: [
           Toolbar(),
-          Canvas({
+          Board({
             children: content,
           }),
           Panels(),
         ],
       })
     );
-  }
-}
-
-let FAKE_ID = 1;
-
-class Text {
-  constructor({
-    content = "Text",
-    bounds = {
-      height: "auto",
-      width: "auto",
-    },
-    color = "black",
-    size = "5em",
-    position,
-    weight = "normal",
-    style = "normal",
-  }) {
-    this.id = FAKE_ID++;
-    this.type = "TEXT";
-
-    this.content = content;
-    this.bounds = bounds;
-    this.color = color;
-    this.size = size;
-    this.position = position;
-    this.weight = weight;
-    this.style = style;
   }
 }

@@ -1,4 +1,4 @@
-import { el } from "../utils";
+import { el } from "../../utils";
 
 function SizeOptions() {
   const sizes = [2, 5, 7, 10];

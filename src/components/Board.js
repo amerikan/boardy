@@ -10,6 +10,13 @@ export default function ({ children }) {
         overflow: "hidden",
         position: "relative",
       },
+      onmousemove: (e) => {
+        const bounds = e.currentTarget.getBoundingClientRect();
+
+        console.log(
+          `x: ${e.clientX - bounds.left}, y: ${e.clientY - bounds.top}`
+        );
+      },
     },
     ...children
   );

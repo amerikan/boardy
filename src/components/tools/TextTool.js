@@ -1,4 +1,4 @@
-import { el } from "../utils";
+import { el } from "../../utils";
 
 export default function () {
   return el(

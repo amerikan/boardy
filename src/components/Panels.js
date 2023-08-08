@@ -1,8 +1,8 @@
 import { el } from "../utils";
 
-import InfoPanel from "./InfoPanel";
-import PropertiesPanel from "./PropertiesPanel";
-import LayersPanel from "./LayersPanel";
+import InfoPanel from "./panels/InfoPanel";
+import PropertiesPanel from "./panels/PropertiesPanel";
+import LayersPanel from "./panels/LayersPanel";
 
 export default function () {
   return el(
