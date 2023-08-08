@@ -6,7 +6,7 @@ Add styled text, images, or shapes anywhere on a canvas to create slides.
 
 ## Demo
 
-[Live Demo](http://amerikan.github.io/boardy)
+[Live Demo](https://amerikan.github.io/boardy)
 
 ## Usage
 
