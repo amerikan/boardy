@@ -1,15 +1,15 @@
 import { el } from "./utils";
 
-import App from "./components/App";
-import Board from "./components/Board";
+import App from "./ui/App";
+import Board from "./ui/Board";
 
-import Panels from "./components/Panels";
-import Toolbar from "./components/bars/Toolbar";
+import Panels from "./ui/Panels";
+import Toolbar from "./ui/bars/Toolbar";
 
-import BoldButton from "./components/menus/BoldButton";
-import ItalicizeButton from "./components/menus/ItalicizeButton";
-import DeleteButton from "./components/menus/DeleteButton";
-import FontSizeSelect from "./components/menus/FontSizeSelect";
+import BoldButton from "./ui/menus/BoldButton";
+import ItalicizeButton from "./ui/menus/ItalicizeButton";
+import DeleteButton from "./ui/menus/DeleteButton";
+import FontSizeSelect from "./ui/menus/FontSizeSelect";
 
 import Layer from "./controllers/Layer";
 
