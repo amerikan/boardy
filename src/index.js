@@ -1,5 +1,8 @@
 import { el } from "./utils";
 
+import App from "./components/App";
+import Canvas from "./components/Canvas";
+
 import Panels from "./components/Panels";
 import Toolbar from "./components/Toolbar";
 
@@ -88,6 +91,10 @@ export default class Boardy {
 
             this.contentEditable = true;
             this.focus();
+
+            // Update UI
+            textBox.style.borderColor = "#000";
+            tools.style.display = "block";
           },
           onblur: function (e) {
             // Update Model
@@ -124,7 +131,8 @@ export default class Boardy {
             }
 
             // Update UI
-            _this.render();
+            // _this.render();
+            textBox.style.fontWeight = o.weight;
           },
         }),
         ItalicizeButton({
@@ -138,7 +146,8 @@ export default class Boardy {
             }
 
             // Update UI
-            _this.render();
+            // _this.render();
+            textBox.style.fontStyle = o.style;
           },
         }),
         FontSizeSelect({
@@ -147,7 +156,8 @@ export default class Boardy {
             o.size = this.value + "em";
 
             // Update UI
-            _this.render();
+            // _this.render();
+            textBox.style.fontSize = o.size;
           },
         }),
         DeleteButton({
@@ -175,16 +185,6 @@ export default class Boardy {
             top: o.position.top,
             left: o.position.left,
             whiteSpace: "nowrap",
-          },
-          onmouseover: function () {
-            // Update UI
-            textBox.style.borderColor = "#000";
-            tools.style.display = "block";
-          },
-          onmouseleave: function () {
-            // Update UI
-            textBox.style.borderColor = "transparent";
-            tools.style.display = "none";
           },
           onmousedown: function (e) {
             window.addEventListener("mousemove", handleMove);
@@ -214,36 +214,17 @@ export default class Boardy {
       return container;
     });
 
-    const canvas = () =>
-      el(
-        "div",
-        {
-          style: {
-            border: "1px solid black",
-            width: "calc(100% - 300px - 30px)",
-            overflow: "hidden",
-            position: "relative",
-          },
-        },
-        ...content
-      );
-
-    const app = () =>
-      el(
-        "div",
-        {
-          style: {
-            display: "flex",
-            alignItems: "stretch",
-            height: "100%",
-          },
-        },
-        Toolbar(),
-        canvas(),
-        Panels()
-      );
-
-    $root.appendChild(app());
+    $root.appendChild(
+      App({
+        children: [
+          Toolbar(),
+          Canvas({
+            children: content,
+          }),
+          Panels(),
+        ],
+      })
+    );
   }
 }
 
