@@ -1,6 +1,10 @@
 import { el } from "../utils";
 
-export default function ({ children }) {
+import Board from "./Board";
+import Panels from "./Panels";
+import Toolbar from "./bars/Toolbar";
+
+export default function App() {
   return el(
     "div",
     {
@@ -10,6 +14,8 @@ export default function ({ children }) {
         height: "100%",
       },
     },
-    ...children
+    Toolbar(),
+    Board(),
+    Panels()
   );
 }
