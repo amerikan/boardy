@@ -1,4 +1,4 @@
-import { store as storeSubject } from "../index";
+import Subject from "./app.observer";
 
 class Store {
   constructor() {
@@ -14,7 +14,7 @@ class Store {
       ...partialDataObject,
     };
 
-    storeSubject.notify();
+    Subject.notify();
   }
 }
 

@@ -1,22 +1,6 @@
 import App from "./ui/App";
 
-class Subject {
-  constructor() {
-    this.observers = [];
-  }
-  subscribe(func) {
-    this.observers.push(func);
-  }
-  notify() {
-    console.log("FIRED notify");
-
-    this.observers.forEach((func) => {
-      func();
-    });
-  }
-}
-
-export const store = new Subject();
+import StoreObserver from "./store/app.observer";
 
 export default class Boardy {
   constructor(selector) {
@@ -26,7 +10,7 @@ export default class Boardy {
   mount() {
     this.render();
 
-    store.subscribe(() => {
+    StoreObserver.subscribe(() => {
       this.render();
     });
   }
